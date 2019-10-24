@@ -17,20 +17,20 @@ bool valid_message(string message, int setting) {
 
 string Caesaer_Cipher(string message, int setting, bool decrypt) {
 	if (!valid_message(message, setting)) return "Invalid Parameters";
-	char alphabet_arr[26] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z' };
+	char alphabet_arr[52] = { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z' };
 	for (int t = 0; t < message.size(); t++) {
-		for (int i = 0; i < 26; i++) {
+		for (int i = 0; i < 52; i++) {
 
-			if (isspace(message[t])) break;
-			//message[t] = putchar(tolower(message[t]));
 			if (message[t] == alphabet_arr[i]) {
-				if(decrypt)
+				if (decrypt)
 					message[t] = alphabet_arr[i - setting];
-				else					
+				else if (!decrypt)
 					message[t] = alphabet_arr[i + setting];
+				/*else 
+					message[t] = message[t];*/
 				break;
 			}
-			if (i == 25) i = 0;
+			if (i == 51) i = 0;
 		}
 	}
 	return message;
@@ -46,11 +46,21 @@ bool is_decrypt(int choice) {
 	}
 }
 
+string convertToString(char* a, int size)
+{
+	int i;
+	string s = "";
+	for (i = 0; i < size; i++) {
+		s = s + a[i];
+	}
+	return s;
+}
+
 void start() {
 
 	int choice = 0;
 	int setting = 1;
-	string message = "";
+	string message;
 	cout << "Do you want to encrypt or decrypt a message? (0 = Encrypt, 1 = Decrypt)" << endl;
 	cin >> choice;
 	
@@ -62,7 +72,7 @@ void start() {
 	else {
 		cout << "Enter a message to encrypt" << endl;
 	}
-	
+
 	cin >> message;
 
 	cout << "Choose an integer setting" << endl;
